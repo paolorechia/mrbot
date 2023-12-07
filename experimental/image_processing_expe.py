@@ -131,6 +131,34 @@ percentage = float(j) / float(200)
 print("Found left arrow at ", i, j)
 print("Approximate power percentage: ", percentage)
 
+# cv2.imshow('original', img)
+# cv2.imshow('mask', mask)
+# cv2.imshow('result', output)
+# cv2.waitKey()
+
+image = cv2.imread("screenshots/frame_1981.jpg")
+def crop_for_reward_title(img):
+    x_left = 400
+    x_right = 600
+    y_top = 5
+    y_bottm = 200
+    return img[y_top:y_bottm, x_left:x_right]
+
+img = crop_for_reward_title(image)
+hMin = 0
+sMin = 0
+vMin = 0
+hMax = 38
+sMax = 186
+vMax = 255
+
+lower = np.array([hMin, sMin, vMin])
+upper = np.array([hMax, sMax, vMax])
+
+# Create HSV Image and threshold into a range.
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+mask = cv2.inRange(hsv, lower, upper)
+output = cv2.bitwise_and(img,img, mask= mask)
 cv2.imshow('original', img)
 cv2.imshow('mask', mask)
 cv2.imshow('result', output)

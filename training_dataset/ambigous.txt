@@ -1,0 +1,9 @@
+ambiguous/third_batch_135.jpg 0
+ambiguous/third_batch_139.jpg 0
+ambiguous/third_batch_141.jpg 0
+ambiguous/third_batch_143.jpg 0
+ambiguous/third_batch_40.jpg 0
+ambiguous/third_batch_95.jpg 0
+ambiguous/third_batch_170.jpg 0
+ambiguous/third_batch_173.jpg 0
+ambiguous/third_batch_176.jpg 0

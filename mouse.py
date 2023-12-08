@@ -14,12 +14,12 @@ def mousedown():
     _run("mousedown 1")
 
 def mouseup():
-    _run("mousedown 1")
+    _run("mouseup 1")
 
 def slow_click_random():
     sleep_time = random.random()
-    sleep_time = min(0.149, sleep_time)
-    sleep_time = max(0.589, sleep_time)
+    sleep_time = min(0.1, sleep_time)
+    sleep_time = max(0.2, sleep_time)
     mousedown()
     time.sleep(sleep_time)
     mouseup()

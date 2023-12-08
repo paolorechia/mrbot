@@ -23,7 +23,7 @@ from mouse import (
 )
 import sys
 
-MAX_FRAMES = 100000
+MAX_FRAMES = 1000
 
 
 @dataclass
@@ -99,24 +99,27 @@ while True:
         (sct_img.width, sct_img.height),
         sct_img.rgb,
     )
-    img = np.array(img)
-    cropped = crop(img)
-    mini_crop = crop_for_minigame(img)
-    title_crop = crop_for_reward_title(img)
+    cropped = crop(np.array(img)[:, :, ::-1])
+    # mini_crop = crop_for_minigame(img)
+    # title_crop = crop_for_reward_title(img)
 
     red = apply_red_filter(cropped)
-    orange = apply_orange_filter(mini_crop)
-    title_pixels = apply_reward_title_filter(title_crop)
+    # orange = apply_orange_filter(mini_crop)
+    # title_pixels = apply_reward_title_filter(title_crop)
 
     red_count = count_red_pixels(red)
-    orange_count = count_red_pixels(orange)
-    title_pixel_count = count_red_pixels(title_pixels)
-    
-    i, j = find_marker(mini_crop)
-    percentage = get_approx_percentage(j)
+    # orange_count = count_red_pixels(orange)
+    # title_pixel_count = count_red_pixels(title_pixels)
+    b
+    # i, j = find_marker(mini_crop)
+    # percentage = get_approx_percentage(j)
 
-    game_state.set_sensors(red_count, orange_count, title_pixel_count, percentage)
+    game_state.set_sensors(red_count, 0, 0, 0)
     game_state.update_state()
-    game_state.take_action()
+    # game_state.take_action()
     sys.stdout.write("\033[K")  # Clear to the end of line
     print(game_state)
+    # cv2.imshow('original', img)
+    # cv2.imshow('mini crop', mini_crop)
+    # cv2.imshow('cropped', cropped)
+    # cv2.waitKey()

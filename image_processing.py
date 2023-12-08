@@ -5,7 +5,7 @@ import cv2
 def crop(img):
     x_left = 200
     x_right = 800
-    y_top = 100
+    y_top = 200
     y_bottm = 600
 
     return img[y_top:y_bottm, x_left:x_right]
@@ -17,6 +17,7 @@ def crop_for_minigame(img):
     y_top = 300
     y_bottm = 500
     return img[y_top:y_bottm, x_left:x_right]
+
 
 def crop_for_reward_title(img):
     x_left = 400
@@ -79,13 +80,16 @@ def apply_orange_filter(img):
     return output
 
 
+# def count_red_pixels(img):
+#     count = 0
+#     for row in img:
+#         for column in row:
+#             if column[-1] != 0:
+#                 count += 1
+#     return count
+
 def count_red_pixels(img):
-    count = 0
-    for row in img:
-        for column in row:
-            if column[-1] != 0:
-                count += 1
-    return count
+    return np.sum(img[:, :, 2])
 
 def find_marker(img):
     for i, row in enumerate(img):

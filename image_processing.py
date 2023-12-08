@@ -102,3 +102,21 @@ def get_approx_percentage(j):
     considered_max_width = 200
     percentage = float(j) / float(considered_max_width)
     return percentage
+
+
+class HaarCascade:
+    def __init__(self) -> None:
+        self._cascade = cv2.CascadeClassifier("training_dataset/haar/cascade.xml")
+
+    def detect_count(self, img):
+        test, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
+            img,
+            scaleFactor=1.01,
+            minNeighbors=10,
+            minSize=(30, 30),
+            maxSize=(32, 32),
+            flags = cv2.CASCADE_SCALE_IMAGE,
+            outputRejectLevels = True
+        )
+        print(levelWeights)
+        return len(test)

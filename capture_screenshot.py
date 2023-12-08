@@ -22,5 +22,5 @@ sct_img.rgb,
 )
 
 frame += 1
-path = os.path.join(f"screenshots/frame_{frame}.jpg")
+path = os.path.join(f"screenshots/third_batch_{frame}.jpg")
 img.save(path)

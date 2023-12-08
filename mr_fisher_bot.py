@@ -13,6 +13,7 @@ from image_processing import (
     count_red_pixels,
     find_marker,
     get_approx_percentage,
+    HaarCascade
 )
 from mouse import (
     mouseup,
@@ -35,21 +36,26 @@ class GameState:
         self.is_waiting = False
         self.red_count = 0
         self.frame_counter = 0
+        self.orange_count = 0
+        self.percentage = 0
+        self.title_pixel_count = 0
+        self.bait_count = 0
 
-    def set_sensors(self, red_count, orange_count, title_pixel_count, percentage):
-        self.red_count = red_count
-        self.orange_count = orange_count
-        self.percentage = percentage
-        self.title_pixel_count = title_pixel_count
+    def set_sensors(self, **kwargs):
+        for key, item in kwargs.items():
+            setattr(self, key, item)
 
     def update_state(self):
-        if self.is_fishing and red_count < 30:
-            self.is_baited = True
+        if self.bait_count > 0:
+            self.is_fishing = True
 
-        if self.orange_count > 1000:
-            self.is_catching = True
-        else:
-            self.is_catching = False
+        # if self.is_fishing and self.red_count < 30:
+        #     self.is_baited = True
+
+        # if self.orange_count > 1000:
+        #     self.is_catching = True
+        # else:
+        #     self.is_catching = False
 
         self.frame_counter += 1
 
@@ -92,6 +98,7 @@ monitor = {"top": 80, "left": 80, "width": 1024, "height": 768}
 
 sct = mss.mss()
 game_state = GameState()
+haar = HaarCascade()
 while True:
     sct_img = sct.grab(monitor)
     img = Image.frombytes(
@@ -99,23 +106,24 @@ while True:
         (sct_img.width, sct_img.height),
         sct_img.rgb,
     )
-    cropped = crop(np.array(img)[:, :, ::-1])
+    img = np.array(img)[:, :, ::-1]
+    # cropped = crop(img)
     # mini_crop = crop_for_minigame(img)
     # title_crop = crop_for_reward_title(img)
 
-    red = apply_red_filter(cropped)
+    # red = apply_red_filter(cropped)
     # orange = apply_orange_filter(mini_crop)
     # title_pixels = apply_reward_title_filter(title_crop)
 
-    red_count = count_red_pixels(red)
+    # red_count = count_red_pixels(red)
     # orange_count = count_red_pixels(orange)
     # title_pixel_count = count_red_pixels(title_pixels)
-    b
     # i, j = find_marker(mini_crop)
     # percentage = get_approx_percentage(j)
 
-    game_state.set_sensors(red_count, 0, 0, 0)
-    game_state.update_state()
+    detected_baits = haar.detect_count(img)
+    game_state.set_sensors(bait_count=detected_baits)
+    # game_state.update_state()
     # game_state.take_action()
     sys.stdout.write("\033[K")  # Clear to the end of line
     print(game_state)

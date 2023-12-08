@@ -12,7 +12,7 @@ def crop(img):
     return img[y_top:y_bottm, x_left:x_right]
 
 
-baitCascade = cv2.CascadeClassifier("training_dataset/cascade/cascade.xml")
+baitCascade = cv2.CascadeClassifier("training_dataset/haar/cascade.xml")
 
 img = crop(img)
 result = img.copy()
@@ -37,18 +37,20 @@ output = cv2.bitwise_and(img,img, mask= mask)
 # cv2.imshow('result', output)
 # cv2.waitKey()
 
-test, weights = baitCascade.detectMultiScale3(
+test, rejectLevels, levelWeights = baitCascade.detectMultiScale3(
     img,
-    scaleFactor=1.1,
+    scaleFactor=1.01,
     minNeighbors=5,
     minSize=(30, 30),
+    maxSize=(30, 30),
     flags = cv2.CASCADE_SCALE_IMAGE,
     outputRejectLevels = True
 )
-# print("Neighbors:", neighbors)
-print("Weights:", weights)
+print("rejectLevels:", rejectLevels)
+print("Weights:", levelWeights)
 print(f"Found {len(test)} fishing baits")
-for (x,y,w,h),confidence in zip(test, weights):
+for (x,y,w,h),confidence in zip(test, levelWeights):
+    # if confidence < 0:
     center = (x + w//2, y + h//2)
     frame = cv2.ellipse(img, center, (w//2, h//2), 0, 0, 360, (255, 0, 255), 4)
     # faceROI = frame_gray[y:y+h,x:x+w]

@@ -109,7 +109,7 @@ class HaarCascade:
         self._cascade = cv2.CascadeClassifier("training_dataset/haar/cascade.xml")
 
     def detect_count(self, img):
-        test, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
+        rects, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
             img,
             scaleFactor=1.01,
             minNeighbors=10,
@@ -119,4 +119,4 @@ class HaarCascade:
             outputRejectLevels = True
         )
         print(levelWeights)
-        return len(test)
+        return len(rects), rects

@@ -26,7 +26,7 @@ class State:
 class FishingBot:
     def __init__(self, reaction_rate=5) -> None:
         self.reaction_rate = reaction_rate
-        self.cooldown_rate = self.reaction_rate * 10
+        self.cooldown_rate = self.reaction_rate * 5
         self.state = State.IDLE
         self.is_in_cooldown = False
 
@@ -81,7 +81,7 @@ class FishingBot:
         if action == Action.START_CATCHING:
             self.start_catching()
             self.state = State.CATCHING
-            self.is_in_cooldown = False
+            self.is_in_cooldown = True
 
         if action == Action.CONTINUE_CATCHING:
             self.handle_catch()

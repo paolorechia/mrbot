@@ -45,4 +45,5 @@ def test_game_state():
 def test_bot():
     game_state = GameState(15)
     bot = FishingBot()
-    bot.take_action(game_state)
+
+    bot.act(game_state)

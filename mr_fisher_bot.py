@@ -35,6 +35,6 @@ if __name__ == "__main__":
         )
         game_state.update_state()
 
-        fishing_bot.take_action(game_state)
+        fishing_bot.act(game_state)
 
         print(game_state)

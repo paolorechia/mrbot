@@ -1,8 +1,8 @@
 import os
 
 import cv2
-from image_processing import HaarCascade
 
+from image_processing import HaarCascade
 
 haar = HaarCascade()
 
@@ -30,8 +30,8 @@ for filename in test_dataset:
         else:
             false_positives.append(filename)
 
-    cv2.imshow(f"count: {detected_count}, file: {filename}", img)
-    cv2.waitKey()
+    # cv2.imshow(f"count: {detected_count}, file: {filename}", img)
+    # cv2.waitKey()
 
 accuracy = len(true_positives) / len(test_dataset)
 false_negative_rate = len(false_negatives) / len(test_dataset)

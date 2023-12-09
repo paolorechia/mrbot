@@ -1,11 +1,10 @@
-from fishing_bot import FishingBot
-from game_state import GameState
-from image_processing import CatchingBoxDetector
-from image_processing import HaarCascade
 import mss
 import numpy as np
 from PIL import Image
 
+from fishing_bot import FishingBot
+from game_state import GameState
+from image_processing import CatchingBoxDetector, HaarCascade
 
 if __name__ == "__main__":
     monitor = {"top": 80, "left": 80, "width": 1024, "height": 768}

@@ -2,7 +2,6 @@ from collections import deque
 from dataclasses import dataclass
 from typing import Any
 
-
 MAX_FRAMES = 100
 
 
@@ -13,7 +12,6 @@ class GameState:
 
         self.catching_box_count_deque = deque([], maxlen=number_of_kept_frames)
         self.percentage_deque = deque([], maxlen=number_of_kept_frames)
-        self.title_pixel_count_deque = deque([], maxlen=number_of_kept_frames)
         self.bait_count_deque = deque([], maxlen=number_of_kept_frames)
 
         self.is_fishing = False
@@ -44,14 +42,11 @@ class GameState:
         if self.is_fishing and self.bait_count <= 0.9:
             self.is_baited = True
 
-        if self.is_baited and self.orange_count > 5000:
+        if self.is_baited and self.catching_box_count >= 0.8:
             self.is_catching = True
 
-        # if self.is_baited and self.bait_count <= 0.2:
-        #     self.reset_state()
-
-        # if self.is_baited and self.orange_count < 5000:
-        #
+        if self.is_catching and self.catching_box_count <= 0.3:
+            self.reset_state()
 
         if self.frame_counter > MAX_FRAMES:
             self.reset_state()
@@ -63,7 +58,6 @@ class GameState:
         self.is_baited = False
         self.is_catching = False
         self.frame_counter = 0
-        self.is_fishing = True
 
     def __str__(self) -> str:
         return str(self.__dict__)

@@ -1,9 +1,11 @@
 from game_state import GameState
-from mouse import click
-from mouse import mousedown
-from mouse import mouseup
-from mouse import move_mouse_to_default_spot
-from mouse import slow_click_random
+from mouse import (
+    click,
+    mousedown,
+    mouseup,
+    move_mouse_to_default_spot,
+    slow_click_random,
+)
 
 
 class FishingBot:

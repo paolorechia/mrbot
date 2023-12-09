@@ -1,8 +1,8 @@
 import os
 
 import cv2
-from image_processing import CatchingBoxDetector
 
+from image_processing import CatchingBoxDetector
 
 negative_test_dir = "training_dataset/negative"
 positive_test_dir = "catching_screenshots"

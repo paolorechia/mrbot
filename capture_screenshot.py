@@ -4,7 +4,6 @@ import mss
 import numpy as np
 from PIL import Image
 
-
 monitor = {"top": 80, "left": 80, "width": 1024, "height": 768}
 
 sct = mss.mss()

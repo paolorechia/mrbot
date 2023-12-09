@@ -112,9 +112,9 @@ class HaarCascade:
         rects, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
             img,
             scaleFactor=1.01,
-            minNeighbors=10,
-            minSize=(30, 30),
-            maxSize=(32, 32),
+            minNeighbors=17,
+            minSize=(34, 34),
+            maxSize=(40, 40),
             flags = cv2.CASCADE_SCALE_IMAGE,
             outputRejectLevels = True
         )

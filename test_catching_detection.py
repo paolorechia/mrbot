@@ -28,7 +28,9 @@ for filename in positive_test_dataset:
     percentage = box_detector.get_percentage()
 
     expected_percentage = float(filename.split(".")[0])
-    percentage_error = percentage - expected_percentage
+    percentage_error = percentage - (expected_percentage / 100)
+
+    print("file: ", filename, "; percentage: ", percentage, "expected ", expected_percentage, "error: ", percentage_error)
 
     error_sum += percentage_error
     if is_active:

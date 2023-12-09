@@ -14,6 +14,7 @@ class Action:
     CONTINUE_CATCHING = 3
     GO_IDLE = 4
     NOOP = 5
+    RESET_COOLDOWN = 6
 
 
 class State:
@@ -41,6 +42,7 @@ class FishingBot:
         # Avoid taking too many repeated actions in small amount of time
         if self.game_state.frame_counter % self.cooldown_rate == 0:
             self.is_in_cooldown = False
+            return Action.RESET_COOLDOWN
 
         if self.is_in_cooldown:
             return Action.NOOP
@@ -62,6 +64,9 @@ class FishingBot:
         return Action.NOOP
 
     def execute_action(self, action):
+        if action == Action.RESET_COOLDOWN:
+            self.is_in_cooldown = False
+
         if action == Action.NOOP:
             return
 
@@ -79,7 +84,7 @@ class FishingBot:
             self.is_in_cooldown = False
 
         if action == Action.CONTINUE_CATCHING:
-            self.handle_catch(self.game_state)
+            self.handle_catch()
 
     def handle_catch(self):
         if self.game_state.percentage < 0.5:

@@ -11,7 +11,7 @@ class GameState:
         self.number_of_kept_frames = number_of_kept_frames
 
         self.catching_box_count_deque = deque([], maxlen=number_of_kept_frames)
-        self.percentage_deque = deque([], maxlen=number_of_kept_frames)
+        self.percentage_deque = deque([], maxlen=2)
         self.bait_count_deque = deque([], maxlen=number_of_kept_frames)
 
         self.is_fishing = False

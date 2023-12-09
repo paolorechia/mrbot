@@ -34,7 +34,6 @@ if __name__ == "__main__":
             percentage=percentage,
         )
         game_state.update_state()
-
+        print(game_state.percentage_deque)
+        print(game_state.is_catching)
         fishing_bot.act(game_state)
-
-        print(game_state)

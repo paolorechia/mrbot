@@ -1,4 +1,5 @@
 import os
+
 import cv2
 from image_processing import CatchingBoxDetector
 
@@ -30,7 +31,16 @@ for filename in positive_test_dataset:
     expected_percentage = float(filename.split(".")[0])
     percentage_error = percentage - (expected_percentage / 100)
 
-    print("file: ", filename, "; percentage: ", percentage, "expected ", expected_percentage, "error: ", percentage_error)
+    print(
+        "file: ",
+        filename,
+        "; percentage: ",
+        percentage,
+        "expected ",
+        expected_percentage,
+        "error: ",
+        percentage_error,
+    )
 
     error_sum += percentage_error
     if is_active:
@@ -60,4 +70,8 @@ print("False positives: ", len(false_positives))
 print("True negatives: ", len(true_negatives))
 print("False negatives: ", len(false_negatives))
 
-print("Accuracy: ", (len(true_positives) + len(true_negatives)) / (len(positive_test_dataset) + len(negative_test_dataset)))
+print(
+    "Accuracy: ",
+    (len(true_positives) + len(true_negatives))
+    / (len(positive_test_dataset) + len(negative_test_dataset)),
+)

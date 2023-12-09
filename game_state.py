@@ -1,7 +1,10 @@
 from collections import deque
 from dataclasses import dataclass
+from typing import Any
+
 
 MAX_FRAMES = 100
+
 
 @dataclass
 class GameState:
@@ -20,7 +23,6 @@ class GameState:
         self.frame_counter = 0
         self.caught_fishes = 0
 
-
     def __getattr__(self, __name: str) -> Any:
         """If the attribute is not found, looks for a deque attribute of similar name.
         If the queue is found, returns the average of the queue."""
@@ -28,14 +30,12 @@ class GameState:
         deque_name = f"{__name}_deque"
         deque_instance = self.__getattribute__(deque_name)
         return sum(deque_instance) / len(deque_instance)
-  
 
     def set_sensors(self, **kwargs):
         for key, item in kwargs.items():
             deque_name = f"{key}_deque"
             deque_attr: deque = getattr(self, deque_name)
             deque_attr.append(item)
-
 
     def update_state(self):
         if self.bait_count > 0.9:
@@ -57,7 +57,6 @@ class GameState:
             self.reset_state()
 
         self.frame_counter += 1
-
 
     def reset_state(self):
         self.is_fishing = False

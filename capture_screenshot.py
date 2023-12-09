@@ -1,7 +1,9 @@
 import os
-import numpy as np
+
 import mss
+import numpy as np
 from PIL import Image
+
 
 monitor = {"top": 80, "left": 80, "width": 1024, "height": 768}
 
@@ -16,9 +18,9 @@ frame = len(os.listdir("screenshots"))
 sct_img = sct.grab(monitor)
 # print(sct_img)
 img = Image.frombytes(
-'RGB', 
-(sct_img.width, sct_img.height), 
-sct_img.rgb, 
+    "RGB",
+    (sct_img.width, sct_img.height),
+    sct_img.rgb,
 )
 
 frame += 1

@@ -1,6 +1,8 @@
 import os
+
 import cv2
 from image_processing import HaarCascade
+
 
 haar = HaarCascade()
 
@@ -18,15 +20,17 @@ for filename in test_dataset:
     if detected_count == 0:
         false_negatives.append(filename)
     else:
-        for (x,y,w,h) in rects:
-            center = (x + w//2, y + h//2)
-            frame = cv2.ellipse(img, center, (w//2, h//2), 0, 0, 360, (255, 0, 255), 4)
+        for x, y, w, h in rects:
+            center = (x + w // 2, y + h // 2)
+            frame = cv2.ellipse(
+                img, center, (w // 2, h // 2), 0, 0, 360, (255, 0, 255), 4
+            )
         if detected_count == 1:
             true_positives.append(filename)
         else:
             false_positives.append(filename)
 
-    cv2.imshow(f'count: {detected_count}, file: {filename}', img)
+    cv2.imshow(f"count: {detected_count}, file: {filename}", img)
     cv2.waitKey()
 
 accuracy = len(true_positives) / len(test_dataset)

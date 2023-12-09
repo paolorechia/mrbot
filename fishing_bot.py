@@ -1,24 +1,22 @@
 from game_state import GameState
-from mouse import (
-    mouseup,
-    mousedown,
-    move_mouse_to_default_spot,
-    slow_click_random,
-    click,
-)
+from mouse import click
+from mouse import mousedown
+from mouse import mouseup
+from mouse import move_mouse_to_default_spot
+from mouse import slow_click_random
+
 
 class FishingBot:
-    def __init__(self, reaction_rate = 5) -> None:
+    def __init__(self, reaction_rate=5) -> None:
         self.reaction_rate = reaction_rate
         self.cooldown_rate = self.reaction_rate * 10
         self.is_fishing_cooldown = False
-
 
     def take_action(self, game_state: GameState):
         if game_state.frame_counter % self.cooldown_rate == 0:
             self.is_fishing_cooldown = False
 
-        if game_state.frame_counter % self.reaction_rate == 0:            
+        if game_state.frame_counter % self.reaction_rate == 0:
             if not game_state.is_fishing and not self.is_fishing_cooldown:
                 self.start_fishing()
 

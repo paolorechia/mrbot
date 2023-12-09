@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 
 class HaarCascade:
@@ -13,15 +13,14 @@ class HaarCascade:
             minNeighbors=17,
             minSize=(34, 34),
             maxSize=(40, 40),
-            flags = cv2.CASCADE_SCALE_IMAGE,
-            outputRejectLevels = True
+            flags=cv2.CASCADE_SCALE_IMAGE,
+            outputRejectLevels=True,
         )
         return len(rects), rects
 
 
-
 class CatchingBoxDetector:
-    def __init__(self, threshold = 5000) -> None:
+    def __init__(self, threshold=5000) -> None:
         self.threshold = threshold
         self.orange_image = None
 
@@ -65,7 +64,7 @@ class CatchingBoxDetector:
         mask = cv2.inRange(hsv, lower, upper)
         output = cv2.bitwise_and(img, img, mask=mask)
         return output
-    
+
     def _crop_for_minigame(self, img):
         x_left = 400
         x_right = 600
@@ -75,5 +74,3 @@ class CatchingBoxDetector:
 
     def _count_red_pixels(self, img):
         return np.sum(img[:, :, 2])
-
-

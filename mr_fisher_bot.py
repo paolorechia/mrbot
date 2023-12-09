@@ -1,14 +1,10 @@
+from fishing_bot import FishingBot
+from game_state import GameState
+from image_processing import CatchingBoxDetector
+from image_processing import HaarCascade
 import mss
 import numpy as np
-
 from PIL import Image
-from image_processing import (
-    HaarCascade,
-    CatchingBoxDetector
-)
-
-from game_state import GameState
-from fishing_bot import FishingBot
 
 
 if __name__ == "__main__":
@@ -28,7 +24,7 @@ if __name__ == "__main__":
         )
         img = np.array(img)[:, :, ::-1]
         detected_baits, rects = haar.detect_count(img)
-        
+
         catching_box_detector.set_img(img)
         is_catching_box_active = catching_box_detector.is_box_active()
         percentage = catching_box_detector.get_percentage()
@@ -36,7 +32,7 @@ if __name__ == "__main__":
         game_state.set_sensors(
             bait_count=detected_baits,
             catching_box_count=is_catching_box_active,
-            percentage=percentage
+            percentage=percentage,
         )
         game_state.update_state()
 

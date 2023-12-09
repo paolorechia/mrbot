@@ -11,7 +11,7 @@ try:
 except Exception:
     pass
 
-frame = len(os.listdir("screenshots")) + 500
+frame = len(os.listdir("screenshots"))
 
 sct_img = sct.grab(monitor)
 # print(sct_img)
@@ -22,6 +22,6 @@ sct_img.rgb,
 )
 
 frame += 1
-path = os.path.join(f"screenshots/negative_{frame}.jpg")
+path = os.path.join(f"screenshots/catching_{frame}.jpg")
 print("Saved screenshot to ", path)
 img.save(path)

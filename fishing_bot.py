@@ -28,9 +28,8 @@ class FishingBot:
         self.reaction_rate = reaction_rate
         self.cooldown_rate = reaction_rate * 10
         self.state = State.IDLE
-        self.is_in_cooldown = False
         self.tolerance_catching_frames = 0
-        self.max_catching_frames = 1000
+        self.max_catching_frames = 10
 
     def update_state(self, game_state: GameState):
         self.game_state = game_state
@@ -52,7 +51,7 @@ class FishingBot:
 
         # Avoid taking changing state too many times in a small amount of time
         if self.game_state.frame_counter % self.cooldown_rate == 0:
-            if self.state == State.IDLE and not self.is_in_cooldown:
+            if self.state == State.IDLE:
                 return Action.START_FISHING
 
             if self.state == State.CATCHING and not self.game_state.is_catching:

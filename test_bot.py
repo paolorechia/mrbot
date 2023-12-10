@@ -68,24 +68,14 @@ def test_bot_act(game_state: GameState, bot: FishingBot):
     assert bot
 
 
-def test_bot_noop(bot: FishingBot):
-    bot.is_in_cooldown = True
-    assert bot.decide_action() == Action.RESET_COOLDOWN
-
-
-def test_bot_refresh_cooldown(game_state: GameState, bot: FishingBot):
-    game_state.frame_counter = bot.cooldown_rate
-    bot.is_in_cooldown = True
+def test_bot_noop(game_state: GameState, bot: FishingBot):
+    game_state.frame_counter = 4
     bot.update_state(game_state)
-
-    assert bot.decide_action() == Action.RESET_COOLDOWN
-
-    bot.act(game_state)
-    assert bot.is_in_cooldown == False
+    assert bot.decide_action() == Action.NOOP
 
 
 def test_bot_start_fishing(game_state: GameState, bot: FishingBot):
-    game_state.frame_counter = bot.reaction_rate
+    game_state.frame_counter = bot.cooldown_rate
     assert bot.decide_action() == Action.START_FISHING
 
     bot.act(game_state)
@@ -115,9 +105,10 @@ def test_bot_continue_catching(game_state: GameState, bot: FishingBot):
 
 
 def test_bot_go_idle(game_state: GameState, bot: FishingBot):
-    game_state.frame_counter = bot.reaction_rate
+    game_state.frame_counter = bot.cooldown_rate
     game_state.is_catching = False
 
+    bot.tolerance_catching_frames = 10
     bot.state = State.CATCHING
     assert bot.decide_action() == Action.GO_IDLE
 

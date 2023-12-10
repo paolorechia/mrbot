@@ -4,8 +4,8 @@ import cv2
 
 from image_processing import CatchingBoxDetector
 
-negative_test_dir = "training_dataset/negative"
-positive_test_dir = "catching_screenshots"
+negative_test_dir = "bait_training_dataset/negative"
+positive_test_dir = "catching_test_dataset/positive"
 positive_test_dataset = os.listdir(positive_test_dir)
 negative_test_dataset = os.listdir(negative_test_dir)[:10]
 

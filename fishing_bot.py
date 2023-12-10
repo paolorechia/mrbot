@@ -29,8 +29,8 @@ class FishingBot:
         self.reaction_rate = reaction_rate
         self.cooldown_rate = reaction_rate * 10
         self.state = State.IDLE
-        self.tolerance_catching_frames = 10
-        self.max_catching_frames = 1
+        self.tolerance_catching_frames = 0
+        self.max_catching_frames = 10
 
     def update_state(self, game_state: GameState):
         self.game_state = game_state
@@ -92,7 +92,7 @@ class FishingBot:
         if not self.game_state.is_catching:
             self.tolerance_catching_frames += 1
 
-        take_screenshot()
+        # take_screenshot()
 
     def start_catching(self):
         move_mouse_to_default_spot()

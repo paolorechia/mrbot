@@ -10,7 +10,7 @@ class GameState:
     def __init__(self, number_of_kept_frames) -> None:
         self.number_of_kept_frames = number_of_kept_frames
 
-        self.catching_box_count_deque = deque([], maxlen=number_of_kept_frames)
+        self.catching_box_count_deque = deque([], maxlen=5)
         self.percentage_deque = deque([], maxlen=2)
         self.bait_count_deque = deque([], maxlen=number_of_kept_frames)
 
@@ -42,7 +42,7 @@ class GameState:
         if self.is_fishing and self.bait_count <= 0.9:
             self.is_baited = True
 
-        if self.is_baited and self.catching_box_count >= 0.8:
+        if self.catching_box_count >= 0.8:
             self.is_catching = True
 
         if self.is_catching and self.catching_box_count <= 0.3:

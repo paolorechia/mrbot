@@ -2,7 +2,7 @@ import os
 
 import cv2
 
-from image_processing import CatchingBoxDetector, CatchingHaarCascade
+from image_processing import CatchingBoxDetector, CatchingLBPCascade
 
 negative_test_dir = "bait_training_dataset/negative"
 positive_test_dir = "catching_test_dataset/positive"
@@ -15,7 +15,7 @@ true_negatives = []
 false_negatives = []
 
 box_detector = CatchingBoxDetector()
-catching_haar = CatchingHaarCascade()
+catching_haar = CatchingLBPCascade()
 
 error_sum = 0.0
 average_error = 0.0
@@ -52,7 +52,7 @@ for filename in positive_test_dataset:
 
     for x, y, w, h in rects:
         frame = cv2.rectangle(
-            img, (x, y), (x + w, y + h), 127
+            img, (x, y), (x + w, y + h), (0, 0, 255), 5
         )
 
     cv2.imshow(f'file: {filename} - found box: {box_count}; error: {percentage_error}', img)

@@ -2,9 +2,9 @@
 <opencv_storage>
 <params>
   <stageType>BOOST</stageType>
-  <featureType>HAAR</featureType>
-  <height>24</height>
-  <width>24</width>
+  <featureType>LBP</featureType>
+  <height>40</height>
+  <width>220</width>
   <stageParams>
     <boostType>GAB</boostType>
     <minHitRate>9.9500000476837158e-01</minHitRate>
@@ -13,7 +13,6 @@
     <maxDepth>1</maxDepth>
     <maxWeakCount>100</maxWeakCount></stageParams>
   <featureParams>
-    <maxCatCount>0</maxCatCount>
-    <featSize>1</featSize>
-    <mode>BASIC</mode></featureParams></params>
+    <maxCatCount>256</maxCatCount>
+    <featSize>1</featSize></featureParams></params>
 </opencv_storage>

@@ -4,7 +4,7 @@ from PIL import Image
 
 from fishing_bot import FishingBot
 from game_state import GameState
-from image_processing import CatchingBoxDetector, HaarCascade
+from image_processing import CatchingBoxDetector, BaitHaarCascade, CatchingLBPCascade
 
 if __name__ == "__main__":
     monitor = {"top": 80, "left": 80, "width": 1024, "height": 768}
@@ -12,8 +12,10 @@ if __name__ == "__main__":
     sct = mss.mss()
     game_state = GameState(number_of_kept_frames=15)
     fishing_bot = FishingBot()
-    haar = HaarCascade()
+    haar = BaitHaarCascade()
     catching_box_detector = CatchingBoxDetector()
+    lbp = CatchingLBPCascade()
+
     while True:
         sct_img = sct.grab(monitor)
         img = Image.frombytes(
@@ -23,17 +25,17 @@ if __name__ == "__main__":
         )
         img = np.array(img)[:, :, ::-1]
         detected_baits, rects = haar.detect_count(img)
+        detected_catching_boxes, rects = lbp.detect_count(img)
 
         catching_box_detector.set_img(img)
-        is_catching_box_active = catching_box_detector.is_box_active()
         percentage = catching_box_detector.get_percentage()
+
+
 
         game_state.set_sensors(
             bait_count=detected_baits,
-            catching_box_count=is_catching_box_active,
+            catching_box_count=detected_catching_boxes,
             percentage=percentage,
         )
         game_state.update_state()
-        print(game_state.percentage_deque)
-        print(game_state.is_catching)
         fishing_bot.act(game_state)

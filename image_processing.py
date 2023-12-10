@@ -18,9 +18,9 @@ class BaitHaarCascade:
         )
         return len(rects), rects
 
-class CatchingHaarCascade:
+class CatchingLBPCascade:
     def __init__(self) -> None:
-        self._cascade = cv2.CascadeClassifier("catching_train_dataset/haar/cascade.xml")
+        self._cascade = cv2.CascadeClassifier("catching_train_dataset/lbp/cascade.xml")
 
     def detect_count(self, img):
         rects, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
@@ -28,9 +28,9 @@ class CatchingHaarCascade:
             scaleFactor=1.01,
             flags=cv2.CASCADE_SCALE_IMAGE,
             outputRejectLevels=True,
-            # minSize=(64, 64),
-            # maxSize=(80, 80),
-
+            minNeighbors=1,
+            minSize=(200, 30),
+            maxSize=(240, 50),
         )
         return len(rects), rects
 

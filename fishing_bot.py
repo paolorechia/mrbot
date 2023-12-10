@@ -6,6 +6,7 @@ from mouse import (
     move_mouse_to_default_spot,
     slow_click_random,
 )
+from capture_screenshot import take_screenshot
 
 
 class Action:
@@ -90,6 +91,8 @@ class FishingBot:
 
         if not self.game_state.is_catching:
             self.tolerance_catching_frames += 1
+
+        take_screenshot()
 
     def start_catching(self):
         move_mouse_to_default_spot()

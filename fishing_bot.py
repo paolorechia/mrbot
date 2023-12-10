@@ -30,7 +30,7 @@ class FishingBot:
         self.state = State.IDLE
         self.is_in_cooldown = False
         self.tolerance_catching_frames = 0
-        self.max_catching_frames = 120
+        self.max_catching_frames = 1000
 
     def update_state(self, game_state: GameState):
         self.game_state = game_state
@@ -82,19 +82,20 @@ class FishingBot:
             self.handle_catch()
 
     def handle_catch(self):
-        if self.game_state.percentage < 0.5:
+        if self.game_state.percentage <= 0.5:
             move_mouse_to_default_spot()
             mousedown()
-        if self.game_state.percentage > 0.8:
+        if self.game_state.percentage >= 0.6:
             move_mouse_to_default_spot()
             mouseup()
+
         if not self.game_state.is_catching:
             self.tolerance_catching_frames += 1
 
     def start_catching(self):
         move_mouse_to_default_spot()
         click()
-        self.catching_frames = 0
+        self.tolerance_catching_frames = 0
 
     def start_fishing(self):
         move_mouse_to_default_spot()

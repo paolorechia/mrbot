@@ -4,7 +4,7 @@ import numpy as np
 
 class HaarCascade:
     def __init__(self) -> None:
-        self._cascade = cv2.CascadeClassifier("training_dataset/haar/cascade.xml")
+        self._cascade = cv2.CascadeClassifier("bait_training_dataset/haar/cascade.xml")
 
     def detect_count(self, img):
         rects, rejectLevels, levelWeights = self._cascade.detectMultiScale3(

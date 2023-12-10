@@ -6,14 +6,14 @@ from image_processing import HaarCascade
 
 haar = HaarCascade()
 
-test_dataset = os.listdir("test_dataset/positive")
+test_dataset = os.listdir("bait_test_dataset/positive")
 
 true_positives = []
 false_positives = []
 false_negatives = []
 
 for filename in test_dataset:
-    path = os.path.join("test_dataset/positive", filename)
+    path = os.path.join("bait_test_dataset/positive", filename)
     print("Reading ", path)
     img = cv2.imread(path)
     detected_count, rects = haar.detect_count(img)

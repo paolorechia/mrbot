@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-class HaarCascade:
+class BaitHaarCascade:
     def __init__(self) -> None:
         self._cascade = cv2.CascadeClassifier("bait_training_dataset/haar/cascade.xml")
 
@@ -18,6 +18,21 @@ class HaarCascade:
         )
         return len(rects), rects
 
+class CatchingHaarCascade:
+    def __init__(self) -> None:
+        self._cascade = cv2.CascadeClassifier("catching_train_dataset/haar/cascade.xml")
+
+    def detect_count(self, img):
+        rects, rejectLevels, levelWeights = self._cascade.detectMultiScale3(
+            img,
+            scaleFactor=1.01,
+            flags=cv2.CASCADE_SCALE_IMAGE,
+            outputRejectLevels=True,
+            # minSize=(64, 64),
+            # maxSize=(80, 80),
+
+        )
+        return len(rects), rects
 
 class CatchingBoxDetector:
     def __init__(self, threshold=5000) -> None:

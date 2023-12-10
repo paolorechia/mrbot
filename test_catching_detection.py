@@ -2,7 +2,7 @@ import os
 
 import cv2
 
-from image_processing import CatchingBoxDetector
+from image_processing import CatchingBoxDetector, CatchingHaarCascade
 
 negative_test_dir = "bait_training_dataset/negative"
 positive_test_dir = "catching_test_dataset/positive"
@@ -15,7 +15,7 @@ true_negatives = []
 false_negatives = []
 
 box_detector = CatchingBoxDetector()
-
+catching_haar = CatchingHaarCascade()
 
 error_sum = 0.0
 average_error = 0.0
@@ -23,9 +23,9 @@ for filename in positive_test_dataset:
     path = os.path.join(positive_test_dir, filename)
 
     img = cv2.imread(path)
-    box_detector.set_img(img)
+    box_count, rects = catching_haar.detect_count(img)
 
-    is_active = box_detector.is_box_active()
+    box_detector.set_img(img)
     percentage = box_detector.get_percentage()
 
     expected_percentage = float(filename.split(".")[0])
@@ -43,21 +43,28 @@ for filename in positive_test_dataset:
     )
 
     error_sum += percentage_error
-    if is_active:
+    if box_count == 1:
         true_positives.append(filename)
-    else:
+    elif box_count == 0:
         false_negatives.append(filename)
+    else:
+        false_positives.append(filename)
 
-    # cv2.imshow(f'file: {filename} - found box: {is_active}; error: {percentage_error}', img)
-    # cv2.waitKey()
+    for x, y, w, h in rects:
+        frame = cv2.rectangle(
+            img, (x, y), (x + w, y + h), 127
+        )
+
+    cv2.imshow(f'file: {filename} - found box: {box_count}; error: {percentage_error}', img)
+    cv2.waitKey()
 
 
 for filename in negative_test_dataset:
     path = os.path.join(negative_test_dir, filename)
     img = cv2.imread(path)
-    box_detector.set_img(img)
-    is_active = box_detector.is_box_active()
-    if is_active:
+    box_count, rects = catching_haar.detect_count(img)
+
+    if box_count > 0:
         false_positives.append(filename)
     else:
         true_negatives.append(filename)

@@ -45,7 +45,7 @@ class CatchingBoxDetector:
 
     def is_box_active(self) -> int:
         red_pixels = self._count_red_pixels(self.orange_image)
-        return red_pixels > self.threshold
+        return 1 if red_pixels > self.threshold else 0
 
     def get_percentage(self) -> float:
         i, j = self._find_marker(self.orange_image)

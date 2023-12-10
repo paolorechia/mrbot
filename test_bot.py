@@ -75,7 +75,7 @@ def test_bot_noop(game_state: GameState, bot: FishingBot):
 
 
 def test_bot_start_fishing(game_state: GameState, bot: FishingBot):
-    game_state.frame_counter = bot.cooldown_rate
+    game_state.frame_counter = bot.fishing_cooldown_rate
     assert bot.decide_action() == Action.START_FISHING
 
     bot.act(game_state)
@@ -105,7 +105,7 @@ def test_bot_continue_catching(game_state: GameState, bot: FishingBot):
 
 
 def test_bot_go_idle(game_state: GameState, bot: FishingBot):
-    game_state.frame_counter = bot.cooldown_rate
+    game_state.frame_counter = bot.fishing_cooldown_rate
     game_state.is_catching = False
 
     bot.tolerance_catching_frames = 10

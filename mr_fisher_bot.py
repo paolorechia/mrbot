@@ -25,10 +25,11 @@ if __name__ == "__main__":
         )
         img = np.array(img)[:, :, ::-1]
         detected_baits, rects = haar.detect_count(img)
-        detected_catching_boxes, rects = lbp.detect_count(img)
-
-        print("Detected boxes", detected_catching_boxes)
+        # detected_catching_boxes, rects = lbp.detect_count(img)
         catching_box_detector.set_img(img)
+        detected_catching_boxes = catching_box_detector.is_box_active()
+        # print("Detected boxes", detected_catching_boxes)
+
         percentage = catching_box_detector.get_percentage()
 
         game_state.set_sensors(
@@ -38,6 +39,6 @@ if __name__ == "__main__":
         )
         # print("Catching box deque: ", game_state.catching_box_count_deque)
         # print("Is catching: ", game_state.is_catching)
-        print(game_state)
+        # print(game_state)
         game_state.update_state()
         fishing_bot.act(game_state)

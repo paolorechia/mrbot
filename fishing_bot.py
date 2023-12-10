@@ -27,10 +27,11 @@ class State:
 class FishingBot:
     def __init__(self, reaction_rate=5) -> None:
         self.reaction_rate = reaction_rate
-        self.cooldown_rate = reaction_rate * 10
+        self.fishing_cooldown_rate = reaction_rate * 10
+        self.catching_cooldown_rate = reaction_rate * 5
+        self.fishing_frames = 0
+        self.max_fishing_frames = 2000
         self.state = State.IDLE
-        self.tolerance_catching_frames = 0
-        self.max_catching_frames = 10
 
     def update_state(self, game_state: GameState):
         self.game_state = game_state
@@ -38,25 +39,39 @@ class FishingBot:
     def act(self, game_state: GameState):
         self.update_state(game_state)
         action = self.decide_action()
-        print(action)
+        print("\33]K action: ", action)
         self.execute_action(action)
 
     def decide_action(self) -> str:
-        if self.state == State.CATCHING and self.tolerance_catching_frames < self.max_catching_frames:
-            return Action.CONTINUE_CATCHING
+        if self.state == State.FISHING:
+            self.fishing_frames += 1
+        else:
+            self.fishing_frames = 0
 
+        if self.fishing_frames > self.max_fishing_frames:
+            return Action.GO_IDLE
+         
+        if self.state == State.CATCHING and self.game_state.is_catching:
+            return Action.CONTINUE_CATCHING
+        
         # Avoid taking too many repeated actions in small amount of time
         if self.game_state.frame_counter % self.reaction_rate == 0:
             if self.state == State.FISHING and self.game_state.is_baited:
                 return Action.START_CATCHING
 
-        # Avoid taking changing state too many times in a small amount of time
-        if self.game_state.frame_counter % self.cooldown_rate == 0:
-            if self.state == State.IDLE:
-                return Action.START_FISHING
-
+        if self.game_state.frame_counter % self.catching_cooldown_rate == 0:
             if self.state == State.CATCHING and not self.game_state.is_catching:
                 return Action.GO_IDLE
+
+        # Avoid taking changing state too many times in a small amount of time
+        if self.game_state.frame_counter % self.fishing_cooldown_rate == 0:
+            # Fix yourself if game state tells otherwise
+            if self.state == State.IDLE and self.game_state.is_fishing:
+                self.state = State.FISHING
+                return Action.NOOP
+
+            if self.state == State.IDLE:
+                return Action.START_FISHING
 
             if self.state == State.FISHING and not self.game_state.is_fishing and not self.game_state.is_baited:
                 return Action.GO_IDLE
@@ -89,12 +104,11 @@ class FishingBot:
             move_mouse_to_default_spot()
             mouseup()
 
-        if not self.game_state.is_catching:
-            self.tolerance_catching_frames += 1
-
-        # take_screenshot()
+        # if self.game_state.frame_counter % self.reaction_rate == 0:
+            # take_screenshot()
 
     def start_catching(self):
+        take_screenshot()
         move_mouse_to_default_spot()
         click()
         self.tolerance_catching_frames = 0

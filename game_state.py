@@ -42,10 +42,11 @@ class GameState:
         if self.is_fishing and self.bait_count <= 0.9:
             self.is_baited = True
 
-        if self.catching_box_count >= 0.8:
+        # Two positives out of 5 of the queue 
+        if self.catching_box_count >= 0.4:
             self.is_catching = True
 
-        if self.is_catching and self.catching_box_count <= 0.3:
+        if self.is_catching and self.catching_box_count == 0.0:
             self.reset_state()
 
         if self.frame_counter > MAX_FRAMES:

@@ -40,5 +40,6 @@ if __name__ == "__main__":
         # print("Catching box deque: ", game_state.catching_box_count_deque)
         # print("Is catching: ", game_state.is_catching)
         # print(game_state)
+        # print("action: ", "NOOP")
         game_state.update_state()
         fishing_bot.act(game_state)

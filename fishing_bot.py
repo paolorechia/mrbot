@@ -39,7 +39,7 @@ class FishingBot:
     def act(self, game_state: GameState):
         self.update_state(game_state)
         action = self.decide_action()
-        print("\33]K action: ", action)
+        print("action: ", action)
         self.execute_action(action)
 
     def decide_action(self) -> str:
